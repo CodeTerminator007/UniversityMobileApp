@@ -30,6 +30,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
 
 
+
 class FacultyViewSet(viewsets.ModelViewSet):
     """
     A simple ViewSet for viewing and editing accounts.

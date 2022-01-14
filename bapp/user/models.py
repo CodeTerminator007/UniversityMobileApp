@@ -35,8 +35,11 @@ class Student(models.Model):
     """Model definition for Student."""
 
     user = models.OneToOneField(User,on_delete=CASCADE,primary_key=True)
+    #gender
     roll_num = models.IntegerField(unique=True,null=True)
-
+    #address = models.TextField()
+    # course_id =
+     
     class Meta:
         """Meta definition for Student."""
 
