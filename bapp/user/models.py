@@ -3,10 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
 # Create your models here.
 
-
-
-
-
 class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
@@ -34,7 +30,7 @@ class Admin(models.Model):
 class Student(models.Model):
     """Model definition for Student."""
 
-    user = models.OneToOneField(User,on_delete=CASCADE,primary_key=True)
+    user = models.OneToOneField(User,on_delete=CASCADE,primary_key=True,related_name='student')
     #gender
     roll_num = models.IntegerField(unique=True,null=True)
     #address = models.TextField()
