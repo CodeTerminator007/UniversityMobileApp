@@ -23,6 +23,8 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'drf_yasg',    
     'rest_framework',
+    'assignments',
+    'courses',
     'announcements',
     'django.contrib.admin',
     'django.contrib.auth',
