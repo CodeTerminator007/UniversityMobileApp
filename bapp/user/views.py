@@ -1,3 +1,5 @@
+import datetime
+from encodings import utf_8
 from django.shortcuts import render
 from rest_framework import viewsets , status
 import user
@@ -11,9 +13,16 @@ from user import serializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.generics import GenericAPIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
-# Create your views here.
+#Tokken function 
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
 
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
@@ -24,12 +33,22 @@ class LoginView(GenericAPIView):
         password = data.get('password', '')
         user = auth.authenticate(username=username, password=password)
         if user:
-
-            auth_token = jwt.encode({'username': user.username}, "secret", algorithm="HS256")
+            # payload = {
+            #     'tokken_type':'access',
+            #     'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+            #     'iat':datetime.datetime.utcnow(),
+            #     'jti' : '',
+            #     'id':user.id,
+                
+            # }
+            # auth_token = jwt.encode(payload, "secret", algorithm="HS256")
 
             serializer = UserSerializer(user)
+            data = {'user':serializer.data,'jwt': get_tokens_for_user(user)}
 
-            data = {'user': serializer.data, 'token': auth_token}
+            # data = {'user': serializer.data, 'jwt': auth_token}
+            # response = Response()
+            # response.set_cookie(key='jwt',value=auth_token,httponly=True)
 
             return Response(data, status=status.HTTP_200_OK)
 

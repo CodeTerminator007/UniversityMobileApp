@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'drf_yasg',    
     'rest_framework',
+    'announcements',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -61,6 +62,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'bapp.urls'
 
 TEMPLATES = [
