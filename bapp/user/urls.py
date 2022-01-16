@@ -15,7 +15,7 @@ router.register(r'faculty', views.FacultyViewSet)
 
 
 urlpatterns = [
-    path('login', LoginView.as_view()),
+    path('auth/login', LoginView.as_view()),
     path('', include(router.urls)),
     
 ]
