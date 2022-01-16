@@ -1,5 +1,7 @@
 from pathlib import Path
-
+from datetime import timedelta
+from django.conf import settings
+import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -130,11 +132,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Django project settings.py
-
-from datetime import timedelta
-from django.conf import settings
-...
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
@@ -167,3 +164,4 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')

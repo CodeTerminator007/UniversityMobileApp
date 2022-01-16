@@ -1,14 +1,40 @@
 from django.shortcuts import render
 from rest_framework import viewsets , status
 import user
+from django.conf import settings
+import jwt
+from django.contrib import auth
 from rest_framework.response import Response
-from .serializer import UserSerializer , StudentSerializer , FacultySerializer ,AdminSerializer
+from .serializer import UserSerializer , StudentSerializer , FacultySerializer ,AdminSerializer ,LoginSerializer
 from .models import User , Admin , Student ,Faculty
 from user import serializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.generics import GenericAPIView
 
 # Create your views here.
+
+
+class LoginView(GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self,request):
+        data = request.data
+        username = data.get('username', '')
+        password = data.get('password', '')
+        user = auth.authenticate(username=username, password=password)
+        if user:
+
+            auth_token = jwt.encode({'username': user.username}, "secret", algorithm="HS256")
+
+            serializer = UserSerializer(user)
+
+            data = {'user': serializer.data, 'token': auth_token}
+
+            return Response(data, status=status.HTTP_200_OK)
+
+            # SEND RES
+        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class UserViewSet(viewsets.ModelViewSet):
 
