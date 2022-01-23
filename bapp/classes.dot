@@ -1,0 +1,13 @@
+digraph "classes" {
+charset="utf-8"
+rankdir=BT
+"0" [label="{Course|credit_hours\ldiscription\ltitle\l|}", shape="record"];
+"1" [label="{CourseSerializer|\l|}", shape="record"];
+"2" [label="{CourseViewset|authentication_classes : list\lpermission_classes : list\lqueryset\lserializer_class\l|}", shape="record"];
+"3" [label="{CoursesConfig|default_auto_field : str\lname : str\l|}", shape="record"];
+"4" [label="{Meta|fields : str\lmodel\l|}", shape="record"];
+"5" [label="{Meta|verbose_name : str\lverbose_name_plural : str\l|}", shape="record"];
+"6" [label="{Migration|dependencies : list\linitial : bool\loperations : list\l|}", shape="record"];
+"0" -> "4" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="model", style="solid"];
+"1" -> "2" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="serializer_class", style="solid"];
+}

@@ -1,0 +1,16 @@
+digraph "packages" {
+charset="utf-8"
+rankdir=BT
+"0" [label="courses", shape="box"];
+"1" [label="courses.admin", shape="box"];
+"2" [label="courses.apps", shape="box"];
+"3" [label="courses.migrations", shape="box"];
+"4" [label="courses.migrations.0001_initial", shape="box"];
+"5" [label="courses.models", shape="box"];
+"6" [label="courses.serializer", shape="box"];
+"7" [label="courses.tests", shape="box"];
+"8" [label="courses.views", shape="box"];
+"6" -> "5" [arrowhead="open", arrowtail="none"];
+"8" -> "5" [arrowhead="open", arrowtail="none"];
+"8" -> "6" [arrowhead="open", arrowtail="none"];
+}

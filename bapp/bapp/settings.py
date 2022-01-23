@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-y0g5w-0tkg*inv^gnq6=6-$a==$iql=eo!(k(gqjh0cn77celb
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'assignments',
     'courses',
+    'django_extensions',
     'announcements',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,13 +52,21 @@ SWAGGER_SETTINGS = {
     }
 }
 
+CORS_ALLOW_METHODS = [
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',
+]
+
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",    
+    'django.middleware.security.SecurityMiddleware',    
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -169,3 +178,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
