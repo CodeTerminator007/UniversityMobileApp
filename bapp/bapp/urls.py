@@ -21,9 +21,7 @@ schema_view = get_schema_view(
       title="Riphah University Api",
       default_version='v1',
       description="Platform for myself to test apis here",
-      terms_of_service="https://www.riphahfsd.com",
-      contact=openapi.Contact(email="Husnain@gmail.com"),
-      license=openapi.License(name="BSD License"),
+
    ),
    public=True,
    permission_classes=[permissions.AllowAny],
