@@ -7,8 +7,8 @@ from django.conf import settings
 import jwt
 from django.contrib import auth
 from rest_framework.response import Response
-from .serializer import UserSerializer , StudentSerializer , FacultySerializer ,AdminSerializer ,LoginSerializer
-from .models import User , Admin , Student ,Faculty
+from .serializer import UserSerializer , StudentSerializer , FacultySerializer ,AdminSerializer ,LoginSerializer,AttendanceSerializer,AttendanceReportSerializer
+from .models import Attendance, AttendanceReport, User , Admin , Student ,Faculty
 from user import serializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -101,5 +101,18 @@ class FacultyViewSet(viewsets.ModelViewSet):
 
     queryset = Faculty.objects.all()
     serializer_class = FacultySerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+class AttendanceViewSet(viewsets.ModelViewSet):
+
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class AttendanceReportViewSet(viewsets.ModelViewSet):
+
+    queryset = AttendanceReport.objects.all()
+    serializer_class = AttendanceReportSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]

@@ -1,7 +1,7 @@
 from unittest.util import _MAX_LENGTH
 from django.contrib.auth.models import Permission
 from rest_framework import serializers
-from .models import User , Student , Faculty , Admin
+from .models import Attendance, AttendanceReport, User , Student , Faculty , Admin
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -33,3 +33,13 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username','password']
+
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance 
+        fields = '__all__'
+
+class AttendanceReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AttendanceReport
+        fields = '__all__'
