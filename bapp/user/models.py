@@ -64,6 +64,7 @@ class Class(models.Model):
 
     class_name = models.CharField(max_length=50)
     sec = models.CharField(max_length=1)
+    # student = models.ForeignKey(Student, on_delete=models.DO_NOTHING)
 
     class Meta:
         """Meta definition for Class."""
@@ -192,6 +193,36 @@ class AttendanceReport(models.Model):
     def __str__(self):
         """Unicode representation of AttendanceReport."""
         pass
+
+class Timetable(models.Model):
+    """Model definition for Timetable."""
+    DAYS_OF_WEEK = (
+    (1, 'Monday'),
+    (2, 'Tuesday'),
+    (3, 'Wednesday'),
+    (4, 'Thursday'),
+    (5, 'Friday'),
+    (6, 'Saturday'),
+    (7, 'Sunday'),)
+
+
+
+    sub = models.CharField(max_length = 100, blank = True)
+    subhoursstart = models.FloatField(blank = True)
+    subhoursend = models.FloatField(blank = True)
+    day = models.CharField(max_length=1, choices=DAYS_OF_WEEK)
+    room  = models.IntegerField()
+    person = models.ForeignKey(User, on_delete=models.CASCADE)
+    class Meta:
+        """Meta definition for Timetable."""
+
+        verbose_name = 'Timetable'
+        verbose_name_plural = 'Timetables'
+
+    def __str__(self):
+        """Unicode representation of Timetable."""
+        pass
+
 
 
 # class LeaveReportStudent(models.Model):

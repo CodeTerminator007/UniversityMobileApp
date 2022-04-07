@@ -4,7 +4,7 @@ from posixpath import basename
 from django.urls import include, path
 from rest_framework import  routers
 from user import views
-from .views import LoginView ,AttendanceViewSet,AttendanceReportViewSet
+from .views import LoginView ,AttendanceViewSet,AttendanceReportViewSet ,TimeTableViewSet
 from announcements.views import AnnouncementView
 from courses.views import CourseViewset ,  SubjectsViewset,ClassViewset
 
@@ -19,6 +19,8 @@ router.register(r'Subject',SubjectsViewset)
 router.register(r'Class',ClassViewset)
 router.register(r'Attendance',AttendanceViewSet)
 router.register(r'AttendanceReport',AttendanceReportViewSet)
+router.register(r'Timetable',TimeTableViewSet)
+
 
 
 

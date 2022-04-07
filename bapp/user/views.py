@@ -7,8 +7,8 @@ from django.conf import settings
 import jwt
 from django.contrib import auth
 from rest_framework.response import Response
-from .serializer import UserSerializer , StudentSerializer , FacultySerializer ,AdminSerializer ,LoginSerializer,AttendanceSerializer,AttendanceReportSerializer
-from .models import Attendance, AttendanceReport, User , Admin , Student ,Faculty
+from .serializer import UserSerializer , StudentSerializer , FacultySerializer ,AdminSerializer ,LoginSerializer,AttendanceSerializer,AttendanceReportSerializer ,TimetableSerializer
+from .models import Attendance, AttendanceReport, User , Admin , Student ,Faculty ,Timetable
 from user import serializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -116,3 +116,13 @@ class AttendanceReportViewSet(viewsets.ModelViewSet):
     serializer_class = AttendanceReportSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+class TimeTableViewSet(viewsets.ModelViewSet):
+
+    queryset = Timetable.objects.all()
+    serializer_class = TimetableSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    def retrieve(self,request,*args,**kwargs):
+        timetable = Timetable.objects.filter(person = kwargs['pk'])
+        serializer = TimetableSerializer(timetable,many=True)
+        return Response(serializer.data)

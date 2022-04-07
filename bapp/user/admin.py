@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import User,Admin,Student,Faculty
 from announcements.models import Announcement
-from .models import Courses ,Subjects , Class ,Attendance,AttendanceReport
+from .models import Courses ,Subjects , Class ,Attendance,AttendanceReport ,Timetable
 
 
 # Register your models here.
@@ -16,5 +16,6 @@ admin.site.register(Subjects)
 admin.site.register(Class)
 admin.site.register(Attendance)
 admin.site.register(AttendanceReport)
+admin.site.register(Timetable)
 
 
