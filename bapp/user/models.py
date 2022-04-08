@@ -117,7 +117,7 @@ class Faculty(models.Model):
 
         verbose_name = 'Faculty'
         verbose_name_plural = 'Facultys'
-
+ 
     def __str__(self):
         """Unicode representation of Faculty."""
         return self.user.username
@@ -208,8 +208,8 @@ class Timetable(models.Model):
 
 
     sub = models.CharField(max_length = 100, blank = True)
-    subhoursstart = models.FloatField(blank = True)
-    subhoursend = models.FloatField(blank = True)
+    subhoursstart = models.TimeField(auto_now=False, auto_now_add=False)
+    subhoursend = models.TimeField(auto_now=False, auto_now_add=False)
     day = models.CharField(max_length=1, choices=DAYS_OF_WEEK)
     room  = models.IntegerField()
     person = models.ForeignKey(User, on_delete=models.CASCADE)

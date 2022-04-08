@@ -125,4 +125,4 @@ class TimeTableViewSet(viewsets.ModelViewSet):
     def retrieve(self,request,*args,**kwargs):
         timetable = Timetable.objects.filter(person = kwargs['pk'])
         serializer = TimetableSerializer(timetable,many=True)
-        return Response(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)

@@ -188,3 +188,4 @@ GRAPH_MODELS = {
   'all_applications': True,
   'group_models': True,
 }
+TIME_INPUT_FORMATS = ('%H:%M',)
