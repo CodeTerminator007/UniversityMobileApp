@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Admin,Student,Faculty
+from .models import Assignment, AssignmentSubmission, User,Admin,Student,Faculty
 from announcements.models import Announcement
 from .models import Courses ,Subjects , Class ,Attendance,AttendanceReport ,Timetable
 
@@ -15,7 +15,17 @@ admin.site.register(Courses)
 admin.site.register(Subjects)
 admin.site.register(Class)
 admin.site.register(Attendance)
-admin.site.register(AttendanceReport)
+# admin.site.register(AttendanceReport)
 admin.site.register(Timetable)
+admin.site.register(Assignment)
+admin.site.register(AssignmentSubmission)
 
+@admin.register(AttendanceReport)
+class AttendanceReportAdmin(admin.ModelAdmin):
+    '''Admin View for AttendanceReport'''
 
+    list_display = ('susername', 'status', 'subject_id')
+    list_filter = ('subject_id', 'student_id')
+
+    def susername(self,obj):
+        return obj.student_id.user.username

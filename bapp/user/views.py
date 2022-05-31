@@ -1,21 +1,37 @@
-import datetime
 from encodings import utf_8
-from django.shortcuts import render
-from rest_framework import viewsets , status
-import user
-from django.conf import settings
+
 import jwt
+from django.conf import settings
 from django.contrib import auth
-from rest_framework.response import Response
-from .serializer import UserSerializer , StudentSerializer , FacultySerializer ,AdminSerializer ,LoginSerializer,AttendanceSerializer,AttendanceReportSerializer ,TimetableSerializer
-from .models import Attendance, AttendanceReport, User , Admin , Student ,Faculty ,Timetable
-from user import serializer
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.db.models import Case, Count, F, When
+from django.shortcuts import get_object_or_404, render
+from django.utils.decorators import method_decorator
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import generics, status, viewsets
+from rest_framework.decorators import action
 from rest_framework.generics import GenericAPIView
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_bulk import BulkModelViewSet
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 
-#Tokken function 
+import user
+from user import serializer
+
+from .models import (Admin, Assignment, AssignmentSubmission, Attendance,
+                     AttendanceReport, Faculty, Student, Timetable, User)
+from .serializer import (AdminSerializer, AssignmentSerializer,
+                         AssignmentSubmissionSerializer,
+                         AttendanceReportSerializer, AttendanceSerializer,
+                         BulkAttandanceSerializer, FacultySerializer,
+                         LoginSerializer, StudentAttendanceReportSeralizer,
+                         StudentSerializer, TimetableSerializer,
+                         UserSerializer,StudentPostSerializer)
+
+
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
 
@@ -33,26 +49,9 @@ class LoginView(GenericAPIView):
         password = data.get('password', '')
         user = auth.authenticate(username=username, password=password)
         if user:
-            # payload = {
-            #     'tokken_type':'access',
-            #     'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            #     'iat':datetime.datetime.utcnow(),
-            #     'jti' : '',
-            #     'id':user.id,
-                
-            # }
-            # auth_token = jwt.encode(payload, "secret", algorithm="HS256")
-
             serializer = UserSerializer(user)
             data = {'user':serializer.data,'jwt': get_tokens_for_user(user)}
-
-            # data = {'user': serializer.data, 'jwt': auth_token}
-            # response = Response()
-            # response.set_cookie(key='jwt',value=auth_token,httponly=True)
-
             return Response(data, status=status.HTTP_200_OK)
-
-            # SEND RES
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -61,22 +60,15 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
-    
-# class CreateUserviewset(viewsets.ViewSet):
-#     def create(self, request):
-#         serializer = UserSerializer(data=request.data)
-#         if request.data['is_student'] == True:
-#             studentser = StudentSerializer(user=user)
-#             if studentser.is_valid():
-#                 studentser.save()
-#                 return Response({'msg':'Student Created'},status=status.HTTP_201_CREATED)
-#             return Response(studentser.errors,status=status.HTTP_400_BAD_Request)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response({'msg':'User Created'},status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors,status=status.HTTP_400_BAD_Request)
+class StudentpostViewSet(viewsets.ModelViewSet):
 
+    queryset = User.objects.all()
+    serializer_class = StudentPostSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
 
 
@@ -95,7 +87,19 @@ class StudentViewSet(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    def retrieve(self,request,*args,**kwargs):
+        studentes = Student.objects.filter(the_class = kwargs['pk'])
+        serializer = StudentSerializer(studentes,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)    
 
+
+
+class NormalStudentViewSet(viewsets.ModelViewSet):
+
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
 class FacultyViewSet(viewsets.ModelViewSet):
 
@@ -103,12 +107,57 @@ class FacultyViewSet(viewsets.ModelViewSet):
     serializer_class = FacultySerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+
+
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('subject_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+        openapi.Parameter('class_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+@method_decorator(name='student_attendance_report', decorator=swagger_auto_schema(
+    responses={'200': StudentAttendanceReportSeralizer()}
+))
 class AttendanceViewSet(viewsets.ModelViewSet):
 
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.action == 'list':
+            class_id = self.request.query_params.get('class_id', None)
+            subject_id = self.request.query_params.get('subject_id', None)
+            if class_id and subject_id:
+                return super().get_queryset().filter(class_id=class_id, subject_id=subject_id)
+        return super().get_queryset()
+    
+    @action(methods=['GET'], detail=True)
+    def student_attendance_report(self, request, pk=None):
+        total_data = Attendance.objects.all().values('class_id', 'subject_id__subject_name', 'subject_id__staff_id__username').annotate(total_lectures=Count('id'))
+        report_data = AttendanceReport.objects.filter(student_id_id=pk).values(
+        CourseName=F('subject_id__subject_name'),
+        TeacherName=F('subject_id__staff_id__username')
+        ).annotate(total_present=Count(
+            Case(
+                When(
+                    status=True,
+                    then=1
+            ))),
+            total_absent=Count(Case(When(status=False,then=1)))
+            )
+        subject_total_lecure_map =  {}
+
+        for x in total_data:
+            subject_total_lecure_map[x['subject_id__subject_name']] = x['total_lectures']
+
+        for x in report_data:
+            x['Lectures']=subject_total_lecure_map[x['CourseName']]
+            x['Percentage'] =  (x['total_present'] / subject_total_lecure_map[x['CourseName']])*100
+
+        return Response(report_data)
+
+
 
 class AttendanceReportViewSet(viewsets.ModelViewSet):
 
@@ -126,3 +175,39 @@ class TimeTableViewSet(viewsets.ModelViewSet):
         timetable = Timetable.objects.filter(person = kwargs['pk'])
         serializer = TimetableSerializer(timetable,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+
+
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('subject_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+class BulkattandanceView(BulkModelViewSet):
+    queryset = AttendanceReport.objects.all()
+    serializer_class = BulkAttandanceSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]    
+    def get_queryset(self):
+        if self.action == 'list':
+            student_id = self.request.query_params.get('student_id', None)
+            subject_id = self.request.query_params.get('subject_id', None)
+            if student_id and subject_id:
+                return super().get_queryset().filter(student_id=student_id, subject_id=subject_id)
+        return super().get_queryset()    
+
+
+
+class AssignmentViewSet(viewsets.ModelViewSet):
+
+    queryset = Assignment.objects.all()
+    serializer_class = AssignmentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
+
+    queryset = AssignmentSubmission.objects.all()
+    serializer_class = AssignmentSubmissionSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]    

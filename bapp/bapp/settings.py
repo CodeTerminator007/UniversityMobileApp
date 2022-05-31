@@ -1,3 +1,4 @@
+from ntpath import join
 from pathlib import Path
 from datetime import timedelta
 from django.conf import settings
@@ -143,8 +144,12 @@ USE_TZ = True
 
 
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
+MEDIA_URL = '/images/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static')
+]
+MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

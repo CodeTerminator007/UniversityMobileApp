@@ -27,6 +27,19 @@ class SubjectsViewset(viewsets.ModelViewSet):
     def retrieve(self,request,*args,**kwargs):
         timetable = Subjects.objects.filter(staff_id = kwargs['pk'])
         serializer = SubjectsSerializer(timetable,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+
+class SubjectsViewsetfilterclass(viewsets.ModelViewSet):
+
+    queryset = Subjects.objects.all()
+    serializer_class = SubjectsSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    def retrieve(self,request,*args,**kwargs):
+        timetable = Subjects.objects.filter(class_id = kwargs['pk'])
+        serializer = SubjectsSerializer(timetable,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)    
 
 class ClassViewset(viewsets.ModelViewSet):
