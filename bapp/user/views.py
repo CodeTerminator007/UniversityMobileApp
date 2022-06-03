@@ -204,6 +204,12 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     serializer_class = AssignmentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    
+    def retrieve(self,request,*args,**kwargs):
+        assignment = Assignment.objects.filter(subject = kwargs['pk'])
+        serializer = AssignmentSerializer(assignment,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
 
 class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
 
