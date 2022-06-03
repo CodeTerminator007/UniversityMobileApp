@@ -110,12 +110,14 @@ class StudentAttendanceReportSeralizer(serializers.Serializer):
 
 
 class AssignmentSerializer(serializers.ModelSerializer):
-
+    document = serializers.FileField(required=False)
     class Meta:
         model =  Assignment
-        fields =  '__all__'
+        fields =  ['id','faculty','Title','detail','submission_datetime','document','subject','status','marks','class_id']
 
 class AssignmentSubmissionSerializer(serializers.ModelSerializer):
+    document = serializers.FileField(required=False)
     class Meta:
         model =  AssignmentSubmission
-        fields =  '__all__'
+        fields =  ['id','assignment','student','document','comment','marks','submission_datetime']
+
