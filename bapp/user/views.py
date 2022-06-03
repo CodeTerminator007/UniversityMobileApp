@@ -204,6 +204,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     serializer_class = AssignmentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
     
     def retrieve(self,request,*args,**kwargs):
         assignment = Assignment.objects.filter(subject = kwargs['pk'])
@@ -217,3 +218,4 @@ class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = AssignmentSubmissionSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]    
+    parser_classes = (MultiPartParser, FormParser)
