@@ -116,8 +116,11 @@ class AssignmentSerializer(serializers.ModelSerializer):
         fields =  ['id','faculty','Title','detail','submission_datetime','document','subject','status','marks','class_id']
 
 class AssignmentSubmissionSerializer(serializers.ModelSerializer):
+    first_name = serializers.ReadOnlyField(source='student.user.first_name')
+    last_name = serializers.ReadOnlyField(source='student.user.last_name')
+    roll_no = serializers.ReadOnlyField(source='student.roll_num')
     document = serializers.FileField(required=False)
     class Meta:
         model =  AssignmentSubmission
-        fields =  ['id','assignment','student','document','comment','marks','submission_datetime']
+        fields =  ['id','assignment','student','document','comment','marks','submission_datetime','first_name','last_name','roll_no']
 
