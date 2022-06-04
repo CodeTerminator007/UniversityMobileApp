@@ -212,6 +212,11 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         return Response(serializer.data,status=status.HTTP_200_OK)
 
 
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+        openapi.Parameter('assignment', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+
 class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
 
     queryset = AssignmentSubmission.objects.all()
@@ -219,3 +224,10 @@ class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]    
     parser_classes = (MultiPartParser, FormParser)
+    def get_queryset(self):
+        if self.action == 'list':
+            student_id = self.request.query_params.get('student_id', None)
+            assignment = self.request.query_params.get('assignment', None)
+            if student_id and assignment:
+                return super().get_queryset().filter(student=student_id, assignment=assignment)
+        return super().get_queryset()    
