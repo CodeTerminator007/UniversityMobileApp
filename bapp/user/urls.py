@@ -14,7 +14,7 @@ from user import views
 from .views import (AssignmentSubmissionViewSet, AssignmentViewSet,
                     AttendanceReportViewSet, AttendanceViewSet,
                     BulkattandanceView, LoginView, NormalStudentViewSet,
-                    TimeTableViewSet,StudentpostViewSet)
+                    TimeTableViewSet,StudentpostViewSet ,SecondAssignmentViewSet)
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -34,6 +34,7 @@ router.register(r'NormalStudentViewset', NormalStudentViewSet)
 router.register(r'AssignmentViewSet', AssignmentViewSet)
 router.register(r'AssignmentSubmissionViewSet', AssignmentSubmissionViewSet)
 router.register(r'StudentPostViewset', StudentpostViewSet)
+router.register(r'SecondAssignmentViewSet',SecondAssignmentViewSet)
 
 
 

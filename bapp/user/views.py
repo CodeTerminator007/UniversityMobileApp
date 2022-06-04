@@ -29,7 +29,7 @@ from .serializer import (AdminSerializer, AssignmentSerializer,
                          BulkAttandanceSerializer, FacultySerializer,
                          LoginSerializer, StudentAttendanceReportSeralizer,
                          StudentSerializer, TimetableSerializer,
-                         UserSerializer,StudentPostSerializer)
+                         UserSerializer,StudentPostSerializer , SecondAssignmentSerializer)
 
 
 def get_tokens_for_user(user):
@@ -211,6 +211,14 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         serializer = AssignmentSerializer(assignment,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
+class SecondAssignmentViewSet(viewsets.ModelViewSet):
+
+    queryset = Assignment.objects.all()
+    serializer_class = SecondAssignmentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
 
 @method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
         openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
@@ -231,3 +239,4 @@ class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
             if student_id and assignment:
                 return super().get_queryset().filter(student=student_id, assignment=assignment)
         return super().get_queryset()    
+
