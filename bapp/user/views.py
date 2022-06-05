@@ -240,3 +240,19 @@ class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
                 return super().get_queryset().filter(student=student_id, assignment=assignment)
         return super().get_queryset()    
 
+
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('assignment', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+class SecondAssignmentSubmissionViewSet(viewsets.ModelViewSet):
+
+    queryset = AssignmentSubmission.objects.all()
+    serializer_class = AssignmentSubmissionSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]    
+    parser_classes = (MultiPartParser, FormParser)
+
+    def retrieve(self,request,*args,**kwargs):
+        assignmentsub = AssignmentSubmission.objects.filter(assignment = kwargs['pk'])
+        serializer = AssignmentSubmissionSerializer(assignmentsub,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
