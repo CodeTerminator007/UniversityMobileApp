@@ -93,6 +93,13 @@ class StudentViewSet(viewsets.ModelViewSet):
         return Response(serializer.data,status=status.HTTP_200_OK)    
 
 
+class SimpleStudentViewSet(viewsets.ModelViewSet):
+
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
 
 class NormalStudentViewSet(viewsets.ModelViewSet):
 
