@@ -241,9 +241,7 @@ class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
         return super().get_queryset()    
 
 
-@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
-        openapi.Parameter('assignment', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
-    ]))
+
 class SecondAssignmentSubmissionViewSet(viewsets.ModelViewSet):
 
     queryset = AssignmentSubmission.objects.all()
