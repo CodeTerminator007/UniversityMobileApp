@@ -113,13 +113,13 @@ class AssignmentSerializer(serializers.ModelSerializer):
     document = serializers.FileField(required=False)
     class Meta:
         model =  Assignment
-        fields =  ['id','faculty','Title','detail','submission_datetime','document','subject','status','marks','class_id']
+        fields =  ['id','faculty','Title','detail','submission_date','submission_time','document','subject','status','marks','class_id']
 
 class SecondAssignmentSerializer(serializers.ModelSerializer):
     document = serializers.FileField(required=False)
     class Meta:
         model =  Assignment
-        fields =  ['id','faculty','Title','detail','submission_datetime','document','subject','status','marks','class_id']
+        fields =  ['id','faculty','Title','detail','submission_date','submission_time','document','subject','status','marks','class_id']
 
 class AssignmentSubmissionSerializer(serializers.ModelSerializer):
     first_name = serializers.ReadOnlyField(source='student.user.first_name')
