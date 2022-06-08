@@ -1,5 +1,3 @@
-from pyexpat import model
-from turtle import title
 from django.db import models
 from user.models import User
 from django.db.models.deletion import DO_NOTHING

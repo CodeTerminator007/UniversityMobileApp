@@ -3,7 +3,7 @@ from .settings import *
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgres',
         'NAME': 'riphah',
         'USER': 'riphah',
         'PASSWORD': 'riphah',
