@@ -144,9 +144,9 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ['id','question','quiz','correct_answer','incorrect_answers']
 
 class QuizSerializer(serializers.ModelSerializer):
-    question = QuestionSerializer(many=True, read_only=True)
+    allquestions = QuestionSerializer(many=True, read_only=True)
     class Meta:
         model = Quiz
-        fields = ['id','title','subject','time','quizDate','question']
+        fields = ['id','title','subject','time','quizDate','allquestions']
 
 

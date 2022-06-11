@@ -329,7 +329,7 @@ class Question(models.Model):
     """Model definition for Question."""
 
     question = models.CharField(max_length=200)
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE,related_name='allquestions')
     correct_answer = models.CharField(max_length=300)
 
     class Meta:
