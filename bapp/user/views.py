@@ -22,14 +22,14 @@ import user
 from user import serializer
 
 from .models import (Admin, Assignment, AssignmentSubmission, Attendance,
-                     AttendanceReport, Faculty, Student, Timetable, User)
+                     AttendanceReport, Faculty, Student, Timetable, User,Quiz,Question,incorrect_answers)
 from .serializer import (AdminSerializer, AssignmentSerializer,
                          AssignmentSubmissionSerializer,
                          AttendanceReportSerializer, AttendanceSerializer,
                          BulkAttandanceSerializer, FacultySerializer,
                          LoginSerializer, StudentAttendanceReportSeralizer,
                          StudentSerializer, TimetableSerializer,
-                         UserSerializer,StudentPostSerializer , SecondAssignmentSerializer)
+                         UserSerializer,StudentPostSerializer , SecondAssignmentSerializer , QuizSerializer ,QuestionSerializer ,incorrect_answersSerializer)
 
 
 def get_tokens_for_user(user):
@@ -261,3 +261,25 @@ class SecondAssignmentSubmissionViewSet(viewsets.ModelViewSet):
         assignmentsub = AssignmentSubmission.objects.filter(assignment = kwargs['pk'])
         serializer = AssignmentSubmissionSerializer(assignmentsub,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
+
+class QuizViewSet(viewsets.ModelViewSet):
+
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class QuestionViewSet(viewsets.ModelViewSet):
+
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class incorrect_answerViewSet(viewsets.ModelViewSet):
+
+    queryset = incorrect_answers.objects.all()
+    serializer_class = incorrect_answersSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
