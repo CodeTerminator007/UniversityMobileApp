@@ -345,7 +345,7 @@ class Question(models.Model):
 class incorrect_answers(models.Model):
     """Model definition for incorrect_answers."""
 
-    Question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    Question = models.ForeignKey(Question, on_delete=models.CASCADE,related_name='incorrect_answers')
     content = models.CharField(max_length=200)
     class Meta:
         """Meta definition for incorrect_answers."""
