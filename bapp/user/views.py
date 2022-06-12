@@ -262,12 +262,25 @@ class SecondAssignmentSubmissionViewSet(viewsets.ModelViewSet):
         serializer = AssignmentSubmissionSerializer(assignmentsub,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
+
+
+
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('subject_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
 class QuizViewSet(viewsets.ModelViewSet):
 
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.action == 'list':
+            subject_id = self.request.query_params.get('subject_id', None)
+            if subject_id:
+                return super().get_queryset().filter(subject=subject_id)
+        return super().get_queryset()    
 
 class QuestionViewSet(viewsets.ModelViewSet):
 
