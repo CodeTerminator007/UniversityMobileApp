@@ -373,9 +373,8 @@ class QuizResult(models.Model):
         verbose_name_plural = 'QuizResults'
 
     def __str__(self):
-        """Unicode representation of QuizResult."""
-        q1 = Quiz.objects.get(id=self.quiz)
-        return q1.title
+        """Unicode representation of QuizResult."""        
+        return self.quiz
 
 
 # class LeaveReportStudent(models.Model):
