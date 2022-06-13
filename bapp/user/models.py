@@ -305,6 +305,77 @@ class AssignmentSubmission(models.Model):
 
 
 
+class Quiz(models.Model):
+    """Model definition for Quiz."""
+    title = models.CharField(max_length=50)
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
+    time = models.IntegerField(help_text="Duration of the quiz in seconds", default="1")
+    quizDate = models.DateField()
+    class Meta:
+        """Meta definition for Quiz."""
+
+        verbose_name = 'Quiz'
+        verbose_name_plural = 'Quizs'
+
+    def __str__(self):
+        """Unicode representation of Quiz."""
+        return self.title
+
+    def get_questions(self):
+        return self.question_set.all()
+
+
+class Question(models.Model):
+    """Model definition for Question."""
+
+    question = models.CharField(max_length=200)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE,related_name='allquestions')
+    correct_answer = models.CharField(max_length=300)
+
+    class Meta:
+        """Meta definition for Question."""
+
+        verbose_name = 'Question'
+        verbose_name_plural = 'Questions'
+
+    def __str__(self):
+        """Unicode representation of Question."""
+        return self.question
+
+class incorrect_answers(models.Model):
+    """Model definition for incorrect_answers."""
+
+    Question = models.ForeignKey(Question, on_delete=models.CASCADE,related_name='incorrect_answers')
+    content = models.CharField(max_length=200)
+    class Meta:
+        """Meta definition for incorrect_answers."""
+
+        verbose_name = 'incorrect_answers'
+        verbose_name_plural = 'incorrect_answerss'
+
+    def __str__(self):
+        """Unicode representation of incorrect_answers."""
+        return self.content
+
+
+
+class QuizResult(models.Model):
+    """Model definition for QuizResult."""
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE,related_name='quizresult_quiz')
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='quizresult_student')
+    marks = models.IntegerField()
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
+
+    class Meta:
+        """Meta definition for QuizResult."""
+
+        verbose_name = 'QuizResult'
+        verbose_name_plural = 'QuizResults'
+
+    def __str__(self):
+        """Unicode representation of QuizResult."""        
+        return f"{self.student.user.username} {self.quiz.title}"
+
 
 # class LeaveReportStudent(models.Model):
 #     student_id = models.ForeignKey(Students, on_delete=models.CASCADE)

@@ -22,14 +22,14 @@ import user
 from user import serializer
 
 from .models import (Admin, Assignment, AssignmentSubmission, Attendance,
-                     AttendanceReport, Faculty, Student, Timetable, User)
+                     AttendanceReport, Faculty, Student, Timetable, User,Quiz,Question,incorrect_answers ,QuizResult)
 from .serializer import (AdminSerializer, AssignmentSerializer,
                          AssignmentSubmissionSerializer,
                          AttendanceReportSerializer, AttendanceSerializer,
                          BulkAttandanceSerializer, FacultySerializer,
                          LoginSerializer, StudentAttendanceReportSeralizer,
                          StudentSerializer, TimetableSerializer,
-                         UserSerializer,StudentPostSerializer , SecondAssignmentSerializer)
+                         UserSerializer,StudentPostSerializer , SecondAssignmentSerializer , QuizSerializer ,QuestionSerializer ,incorrect_answersSerializer,QuizResultSerializer)
 
 
 def get_tokens_for_user(user):
@@ -260,4 +260,58 @@ class SecondAssignmentSubmissionViewSet(viewsets.ModelViewSet):
     def retrieve(self,request,*args,**kwargs):
         assignmentsub = AssignmentSubmission.objects.filter(assignment = kwargs['pk'])
         serializer = AssignmentSubmissionSerializer(assignmentsub,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+
+
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('subject_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+class QuizViewSet(viewsets.ModelViewSet):
+
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.action == 'list':
+            subject_id = self.request.query_params.get('subject_id', None)
+            if subject_id:
+                return super().get_queryset().filter(subject=subject_id)
+        return super().get_queryset()    
+
+class QuestionViewSet(viewsets.ModelViewSet):
+
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class incorrect_answerViewSet(viewsets.ModelViewSet):
+
+    queryset = incorrect_answers.objects.all()
+    serializer_class = incorrect_answersSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+
+@method_decorator(name='retrieve', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+class QuizResultViewSet(viewsets.ModelViewSet):
+
+    queryset = QuizResult.objects.all()
+    serializer_class = QuizResultSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def retrieve(self,request,*args,**kwargs):
+
+        student_id = self.request.query_params.get('student_id', None)
+        quizresult = QuizResult.objects.filter(quiz = kwargs['pk'],student=student_id)
+        serializer = QuizResultSerializer(quizresult,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
