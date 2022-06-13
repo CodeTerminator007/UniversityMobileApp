@@ -301,7 +301,6 @@ class incorrect_answerViewSet(viewsets.ModelViewSet):
 
 @method_decorator(name='retrieve', decorator=swagger_auto_schema(manual_parameters=[
         openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
-        openapi.Parameter('quiz_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
     ]))
 class QuizResultViewSet(viewsets.ModelViewSet):
 
@@ -310,10 +309,9 @@ class QuizResultViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        if self.action == 'retrieve':
-            student_id = self.request.query_params.get('student_id', None)
-            quiz_id = self.request.query_params.get('quiz_id', None)
-            if student_id and quiz_id:
-                return super().get_queryset().filter(student=student_id, quiz=quiz_id)
-        return super().get_queryset()  
+    def retrieve(self,request,*args,**kwargs):
+
+        student_id = self.request.query_params.get('student_id', None)
+        quizresult = QuizResult.objects.filter(quiz = kwargs['pk'],student=student_id)
+        serializer = QuizResultSerializer(quizresult,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
