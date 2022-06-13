@@ -8,7 +8,7 @@ from rest_framework_bulk import (BulkListSerializer, BulkSerializerMixin,
                                  ListBulkCreateUpdateDestroyAPIView)
 
 from .models import (Admin, Assignment, AssignmentSubmission, Attendance,
-                     AttendanceReport, Faculty, Student, Timetable, User ,Quiz ,Question ,incorrect_answers)
+                     AttendanceReport, Faculty, Student, Timetable, User ,Quiz ,Question ,incorrect_answers , QuizResult)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -150,3 +150,7 @@ class QuizSerializer(serializers.ModelSerializer):
         fields = ['id','title','subject','time','quizDate','allquestions']
 
 
+class QuizResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuizResult 
+        fields = '__all__'

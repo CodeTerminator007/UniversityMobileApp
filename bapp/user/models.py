@@ -359,6 +359,23 @@ class incorrect_answers(models.Model):
 
 
 
+class QuizResult(models.Model):
+    """Model definition for QuizResult."""
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE,related_name='quizresult_quiz')
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='quizresult_student')
+    marks = models.IntegerField()
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
+
+    class Meta:
+        """Meta definition for QuizResult."""
+
+        verbose_name = 'QuizResult'
+        verbose_name_plural = 'QuizResults'
+
+    def __str__(self):
+        """Unicode representation of QuizResult."""
+        q1 = Quiz.objects.get(id=self.quiz)
+        return q1.title
 
 
 # class LeaveReportStudent(models.Model):

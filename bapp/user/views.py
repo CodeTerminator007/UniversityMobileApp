@@ -22,14 +22,14 @@ import user
 from user import serializer
 
 from .models import (Admin, Assignment, AssignmentSubmission, Attendance,
-                     AttendanceReport, Faculty, Student, Timetable, User,Quiz,Question,incorrect_answers)
+                     AttendanceReport, Faculty, Student, Timetable, User,Quiz,Question,incorrect_answers ,QuizResult)
 from .serializer import (AdminSerializer, AssignmentSerializer,
                          AssignmentSubmissionSerializer,
                          AttendanceReportSerializer, AttendanceSerializer,
                          BulkAttandanceSerializer, FacultySerializer,
                          LoginSerializer, StudentAttendanceReportSeralizer,
                          StudentSerializer, TimetableSerializer,
-                         UserSerializer,StudentPostSerializer , SecondAssignmentSerializer , QuizSerializer ,QuestionSerializer ,incorrect_answersSerializer)
+                         UserSerializer,StudentPostSerializer , SecondAssignmentSerializer , QuizSerializer ,QuestionSerializer ,incorrect_answersSerializer,QuizResultSerializer)
 
 
 def get_tokens_for_user(user):
@@ -296,3 +296,24 @@ class incorrect_answerViewSet(viewsets.ModelViewSet):
     serializer_class = incorrect_answersSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+
+
+@method_decorator(name='retrieve', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+        openapi.Parameter('quiz_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+class QuizResultViewSet(viewsets.ModelViewSet):
+
+    queryset = QuizResult.objects.all()
+    serializer_class = QuizResultSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.action == 'retrieve':
+            student_id = self.request.query_params.get('student_id', None)
+            quiz_id = self.request.query_params.get('quiz_id', None)
+            if student_id and quiz_id:
+                return super().get_queryset().filter(student=student_id, quiz=quiz_id)
+        return super().get_queryset()  
