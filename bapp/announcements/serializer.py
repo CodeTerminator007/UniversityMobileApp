@@ -6,4 +6,4 @@ class AnnouncementSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Announcement
-        fields = ['image','title','detail','Arthur','created_at']
+        fields = ['id','image','title','detail','Arthur','created_at']
