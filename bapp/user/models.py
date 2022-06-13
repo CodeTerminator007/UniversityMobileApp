@@ -374,7 +374,7 @@ class QuizResult(models.Model):
 
     def __str__(self):
         """Unicode representation of QuizResult."""        
-        return self.quiz.title
+        return f"{self.student.user.username} {self.quiz.title}"
 
 
 # class LeaveReportStudent(models.Model):
