@@ -365,7 +365,7 @@ class QuizResult(models.Model):
     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='quizresult_student')
     marks = models.IntegerField()
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
-
+    outofmarks = models.IntegerField()
     class Meta:
         """Meta definition for QuizResult."""
 
