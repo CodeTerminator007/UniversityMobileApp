@@ -14,7 +14,10 @@ from user import views
 from .views import (AssignmentSubmissionViewSet, AssignmentViewSet,
                     AttendanceReportViewSet, AttendanceViewSet,
                     BulkattandanceView, LoginView, NormalStudentViewSet,
-                    TimeTableViewSet,StudentpostViewSet ,SecondAssignmentViewSet,SecondAssignmentSubmissionViewSet,SimpleStudentViewSet ,QuizViewSet,QuestionViewSet,incorrect_answerViewSet ,QuizResultViewSet)
+                    QuestionViewSet, QuizResultViewSet, QuizViewSet,
+                    SecondAssignmentSubmissionViewSet, SecondAssignmentViewSet,
+                    SimpleStudentViewSet, StudentpostViewSet, TimeTableViewSet,
+                    incorrect_answerViewSet, quizresultscreenviewset)
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -41,6 +44,7 @@ router.register(r'Quiz',QuizViewSet)
 router.register(r'Question',QuestionViewSet)
 router.register(r'Incorrect_answers',incorrect_answerViewSet)
 router.register(r'quizresult',QuizResultViewSet)
+router.register(r'quizresultscreen',quizresultscreenviewset)
 
 
 
