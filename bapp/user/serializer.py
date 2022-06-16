@@ -27,10 +27,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserUpdatewithoutpasswwordSerializer(serializers.ModelSerializer):
-    profile_image = serializers.ImageField(required=False)
     class Meta:
         model = User 
-        fields = ['id','username','email','first_name','last_name','phone_number1','phone_number2','gender','last_education_degree','Dob','cnic','profile_image']
+        fields = ['id','username','email','first_name','last_name','phone_number1','phone_number2','gender','last_education_degree','Dob','cnic']
         
 class StudentPostSerializer(serializers.ModelSerializer):
     profile_image = serializers.ImageField(required=False)

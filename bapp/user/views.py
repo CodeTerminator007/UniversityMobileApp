@@ -74,7 +74,6 @@ class UserUpdatewithoutpasswordViewSet(viewsets.ModelViewSet):
     serializer_class = UserUpdatewithoutpasswwordSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-    parser_classes = (MultiPartParser, FormParser)
 
 class StudentpostViewSet(viewsets.ModelViewSet):
 
