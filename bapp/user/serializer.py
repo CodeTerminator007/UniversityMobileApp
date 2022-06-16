@@ -88,11 +88,12 @@ class StudentalleditSerializer(serializers.ModelSerializer):
     last_education_degree = serializers.ReadOnlyField(source='user.last_education_degree')
     cnic = serializers.ReadOnlyField(source='user.cnic')
     profile_image = serializers.ImageField(required=False,source='user.profile_image')
-
+    course = serializers.CharField(source='course_id.course_name')
+    classs = serializers.CharField(source='the_class.class_name')
 
     class Meta:
         model = Student 
-        fields = ['first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user','address','the_class','course_id']
+        fields = ['first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user','address','the_class','course_id','course','classs']
 
 
 class FacultyalleditSerializer(serializers.ModelSerializer):
