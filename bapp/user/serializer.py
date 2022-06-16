@@ -60,12 +60,11 @@ class AdminSerializer(serializers.ModelSerializer):
     gender = serializers.ReadOnlyField(source='user.gender')
     last_education_degree = serializers.ReadOnlyField(source='user.last_education_degree')
     cnic = serializers.ReadOnlyField(source='user.cnic')
-    profile_image = serializers.ReadOnlyField(source='user.profile_image')
-
+    profile_image = serializers.ImageField(required=False,source='user.profile_image')
 
     class Meta:
         model = Admin 
-        fields = ['first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user']
+        fields = ['first_name','last_name','username','user','email','Dob','gender','phone_number1','phone_number2','last_education_degree','cnic','profile_image']
 
 class StudentSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
@@ -89,7 +88,7 @@ class StudentalleditSerializer(serializers.ModelSerializer):
     gender = serializers.ReadOnlyField(source='user.gender')
     last_education_degree = serializers.ReadOnlyField(source='user.last_education_degree')
     cnic = serializers.ReadOnlyField(source='user.cnic')
-    profile_image = serializers.ReadOnlyField(source='user.profile_image')
+    profile_image = serializers.ImageField(required=False,source='user.profile_image')
 
 
     class Meta:
@@ -108,7 +107,7 @@ class FacultyalleditSerializer(serializers.ModelSerializer):
     gender = serializers.ReadOnlyField(source='user.gender')
     last_education_degree = serializers.ReadOnlyField(source='user.last_education_degree')
     cnic = serializers.ReadOnlyField(source='user.cnic')
-    profile_image = serializers.ReadOnlyField(source='user.profile_image')
+    profile_image = serializers.ImageField(required=False,source='user.profile_image')
 
 
     class Meta:
