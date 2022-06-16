@@ -17,7 +17,7 @@ from .views import (AssignmentSubmissionViewSet, AssignmentViewSet,
                     QuestionViewSet, QuizResultViewSet, QuizViewSet,
                     SecondAssignmentSubmissionViewSet, SecondAssignmentViewSet,
                     SimpleStudentViewSet, StudentpostViewSet, TimeTableViewSet,
-                    incorrect_answerViewSet, quizresultscreenviewset)
+                    incorrect_answerViewSet, quizresultscreenviewset,UserUpdatewithoutpasswordViewSet)
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -45,6 +45,7 @@ router.register(r'Question',QuestionViewSet)
 router.register(r'Incorrect_answers',incorrect_answerViewSet)
 router.register(r'quizresult',QuizResultViewSet)
 router.register(r'quizresultscreen',quizresultscreenviewset)
+router.register(r'updateuserwithoutpassword',UserUpdatewithoutpasswordViewSet)
 
 
 

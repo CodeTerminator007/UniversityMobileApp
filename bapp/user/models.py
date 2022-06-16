@@ -254,7 +254,7 @@ class Timetable(models.Model):
 
     def __str__(self):
         """Unicode representation of Timetable."""
-        return self.user.username
+        return self.person.username
 
 
 

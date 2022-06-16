@@ -34,7 +34,7 @@ from .serializer import (AdminSerializer, AssignmentSerializer,
                          StudentAttendanceReportSeralizer,
                          StudentPostSerializer, StudentSerializer,
                          TimetableSerializer, UserSerializer,
-                         incorrect_answersSerializer)
+                         incorrect_answersSerializer,UserUpdatewithoutpasswwordSerializer)
 
 
 def get_tokens_for_user(user):
@@ -63,6 +63,15 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
+
+class UserUpdatewithoutpasswordViewSet(viewsets.ModelViewSet):
+
+    queryset = User.objects.all()
+    serializer_class = UserUpdatewithoutpasswwordSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)

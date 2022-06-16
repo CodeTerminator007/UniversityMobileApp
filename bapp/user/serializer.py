@@ -24,6 +24,13 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class UserUpdatewithoutpasswwordSerializer(serializers.ModelSerializer):
+    profile_image = serializers.ImageField(required=False)
+    class Meta:
+        model = User 
+        fields = ['id','username','email','first_name','last_name','phone_number1','phone_number2','gender','last_education_degree','Dob','cnic','profile_image']
         
 class StudentPostSerializer(serializers.ModelSerializer):
     profile_image = serializers.ImageField(required=False)
@@ -130,6 +137,18 @@ class AssignmentSubmissionSerializer(serializers.ModelSerializer):
     class Meta:
         model =  AssignmentSubmission
         fields =  ['id','assignment','student','document','comment','marks','submission_datetime','first_name','last_name','roll_no']
+
+
+# class Assignmentmarkserializer(serializers.ModelSerializer):
+#     first_name = serializers.ReadOnlyField(source='student.user.first_name')
+#     last_name = serializers.ReadOnlyField(source='student.user.last_name')
+#     roll_no = serializers.ReadOnlyField(source='student.roll_num')
+#     totalmarks = serializers.ReadOnlyField(source='assignment.marks')
+    
+#     document = serializers.FileField(required=False)
+#     class Meta:
+#         model =  AssignmentSubmission
+#         fields =  ['id','assignment','student','document','comment','marks','submission_datetime','first_name','last_name','roll_no','totalmarks']
 
 
 class incorrect_answersSerializer(serializers.ModelSerializer):
