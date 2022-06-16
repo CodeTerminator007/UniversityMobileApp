@@ -93,6 +93,7 @@ class AdminViewSet(viewsets.ModelViewSet):
     serializer_class = AdminSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
 
 class StudentViewSet(viewsets.ModelViewSet):
