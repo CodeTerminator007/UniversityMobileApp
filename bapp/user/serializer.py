@@ -53,12 +53,19 @@ class AdminSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
     first_name = serializers.ReadOnlyField(source='user.first_name')
     last_name = serializers.ReadOnlyField(source='user.last_name')
-
+    email = serializers.ReadOnlyField(source='user.email')
+    Dob = serializers.ReadOnlyField(source='user.Dob')
+    phone_number1 = serializers.ReadOnlyField(source='user.phone_number1')
+    phone_number2 = serializers.ReadOnlyField(source='user.phone_number2')
+    gender = serializers.ReadOnlyField(source='user.gender')
+    last_education_degree = serializers.ReadOnlyField(source='user.last_education_degree')
+    cnic = serializers.ReadOnlyField(source='user.cnic')
+    profile_image = serializers.ReadOnlyField(source='user.profile_image')
 
 
     class Meta:
         model = Admin 
-        fields = '__all__'
+        fields = ['first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user']
 
 class StudentSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
@@ -69,6 +76,45 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student 
         fields = '__all__'
+
+
+class StudentalleditSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+    first_name = serializers.ReadOnlyField(source='user.first_name')
+    last_name = serializers.ReadOnlyField(source='user.last_name')
+    email = serializers.ReadOnlyField(source='user.email')
+    Dob = serializers.ReadOnlyField(source='user.Dob')
+    phone_number1 = serializers.ReadOnlyField(source='user.phone_number1')
+    phone_number2 = serializers.ReadOnlyField(source='user.phone_number2')
+    gender = serializers.ReadOnlyField(source='user.gender')
+    last_education_degree = serializers.ReadOnlyField(source='user.last_education_degree')
+    cnic = serializers.ReadOnlyField(source='user.cnic')
+    profile_image = serializers.ReadOnlyField(source='user.profile_image')
+
+
+    class Meta:
+        model = Student 
+        fields = ['id','first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user']
+
+
+class FacultyalleditSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+    first_name = serializers.ReadOnlyField(source='user.first_name')
+    last_name = serializers.ReadOnlyField(source='user.last_name')
+    email = serializers.ReadOnlyField(source='user.email')
+    Dob = serializers.ReadOnlyField(source='user.Dob')
+    phone_number1 = serializers.ReadOnlyField(source='user.phone_number1')
+    phone_number2 = serializers.ReadOnlyField(source='user.phone_number2')
+    gender = serializers.ReadOnlyField(source='user.gender')
+    last_education_degree = serializers.ReadOnlyField(source='user.last_education_degree')
+    cnic = serializers.ReadOnlyField(source='user.cnic')
+    profile_image = serializers.ReadOnlyField(source='user.profile_image')
+
+
+    class Meta:
+        model = Faculty 
+        fields = ['first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user']
+
 
 class FacultySerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
