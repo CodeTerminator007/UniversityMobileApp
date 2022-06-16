@@ -92,7 +92,7 @@ class StudentalleditSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student 
-        fields = ['first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user']
+        fields = ['first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user','address','the_class','course_id']
 
 
 class FacultyalleditSerializer(serializers.ModelSerializer):
