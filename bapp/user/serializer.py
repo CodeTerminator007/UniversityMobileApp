@@ -90,10 +90,12 @@ class StudentalleditSerializer(serializers.ModelSerializer):
     profile_image = serializers.ImageField(required=False,source='user.profile_image')
     course = serializers.CharField(source='course_id.course_name')
     classs = serializers.CharField(source='the_class.class_name')
+    semaster = serializers.CharField(source='the_class.semaster')
+    sec = serializers.CharField(source='the_class.sec')
 
     class Meta:
         model = Student 
-        fields = ['first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user','address','the_class','course_id','course','classs']
+        fields = ['first_name','last_name','username','email','Dob','phone_number1','phone_number2','gender','last_education_degree','cnic','profile_image','user','address','the_class','course_id','course','classs','semaster','sec']
 
 
 class FacultyalleditSerializer(serializers.ModelSerializer):
