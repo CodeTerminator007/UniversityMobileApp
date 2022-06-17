@@ -389,12 +389,25 @@ class quizresultscreenviewset(viewsets.ModelViewSet):
 
 
 
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+
 class ResultViewset(viewsets.ModelViewSet):
 
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        if self.action == 'list':
+            student_id = self.request.query_params.get('student_id', None)
+            if student_id :
+                return super().get_queryset().filter(student=student_id)
+        return super().get_queryset()    
+
+
+
 
 class SubjectResultViewset(viewsets.ModelViewSet):
 
