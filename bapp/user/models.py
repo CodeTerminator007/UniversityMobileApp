@@ -432,4 +432,4 @@ class SubjectResult(models.Model):
 
     def __str__(self):
         """Unicode representation of SubjectResult."""
-        return f"{self.student.roll_num} {self.name}"        
+        return f"{self.student.roll_num} "        
