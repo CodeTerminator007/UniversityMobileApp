@@ -399,9 +399,25 @@ class ResultViewset(viewsets.ModelViewSet):
 
 
 
+
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+        openapi.Parameter('result_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+
 class SubjectResultViewset(viewsets.ModelViewSet):
 
     queryset = SubjectResult.objects.all()
     serializer_class = SubjectResultSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+
+    def get_queryset(self):
+        if self.action == 'list':
+            student_id = self.request.query_params.get('student_id', None)
+            result_id = self.request.query_params.get('result_id', None)
+            if student_id and result_id:
+                return super().get_queryset().filter(student=student_id, result=result_id)
+        return super().get_queryset()    
+    
