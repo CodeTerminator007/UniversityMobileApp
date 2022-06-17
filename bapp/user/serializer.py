@@ -234,6 +234,10 @@ class ResultSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SubjectResultSerializer(serializers.ModelSerializer):
+    subjectname = serializers.ReadOnlyField(source='subject.subject_name')
+    teacherfirstname = serializers.ReadOnlyField(source='subject.staff_id.first_name')    
+    teacherlastname = serializers.ReadOnlyField(source='subject.staff_id.last_name')    
+    
     class Meta:
         model = SubjectResult 
-        fields = '__all__'
+        fields = ['subjectname','teacherfirstname','teacherlastname','classid','student','subject','result','midobtainedMarks','finalobtainedMarks','sessionalmarks','id']
