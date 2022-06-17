@@ -23,7 +23,7 @@ from user import serializer
 
 from .models import (Admin, Assignment, AssignmentSubmission, Attendance,
                      AttendanceReport, Faculty, Question, Quiz, QuizResult,
-                     Student, Timetable, User, incorrect_answers)
+                     Student, Timetable, User, incorrect_answers,AssignmentResult)
 from .serializer import (AdminSerializer, AssignmentSerializer,
                          AssignmentSubmissionSerializer,
                          AttendanceReportSerializer, AttendanceSerializer,
@@ -284,7 +284,7 @@ class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
 
 class AssignmentmarksresultViewSet(viewsets.ModelViewSet):
 
-    queryset = AssignmentSubmission.objects.all()
+    queryset = AssignmentResult.objects.all()
     serializer_class = Assignmentmarkserializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]    
