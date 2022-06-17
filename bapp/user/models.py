@@ -383,7 +383,7 @@ class AssignmentResult(models.Model):
     assignment = models.ForeignKey(Assignment,on_delete=models.CASCADE)
     student = models.ForeignKey(Student,on_delete=models.CASCADE)
     marks = models.IntegerField()
-
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE,default=1)
     # TODO: Define fields here
 
     class Meta:
