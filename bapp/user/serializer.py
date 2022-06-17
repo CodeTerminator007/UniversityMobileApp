@@ -188,7 +188,6 @@ class AssignmentSubmissionSerializer(serializers.ModelSerializer):
 class Assignmentmarkserializer(serializers.ModelSerializer):
 
     totalmarks = serializers.ReadOnlyField(source='assignment.marks')
-    subject = serializers.ReadOnlyField(source='assignment.subject')        
     class Meta:
         model =  AssignmentResult
         fields =  ['id','assignment','student','marks','totalmarks','subject']
