@@ -34,7 +34,7 @@ from .serializer import (AdminSerializer, AssignmentSerializer,
                          StudentAttendanceReportSeralizer,
                          StudentPostSerializer, StudentSerializer,
                          TimetableSerializer, UserSerializer,
-                         incorrect_answersSerializer,UserUpdatewithoutpasswwordSerializer,StudentalleditSerializer,FacultyalleditSerializer)
+                         incorrect_answersSerializer,UserUpdatewithoutpasswwordSerializer,StudentalleditSerializer,FacultyalleditSerializer,Assignmentmarkserializer)
 
 
 def get_tokens_for_user(user):
@@ -277,7 +277,24 @@ class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
                 return super().get_queryset().filter(student=student_id, assignment=assignment)
         return super().get_queryset()    
 
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+        openapi.Parameter('subject_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
 
+class AssignmentmarksresultViewSet(viewsets.ModelViewSet):
+
+    queryset = AssignmentSubmission.objects.all()
+    serializer_class = Assignmentmarkserializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]    
+    def get_queryset(self):
+        if self.action == 'list':
+            student_id = self.request.query_params.get('student_id', None)
+            subject_id = self.request.query_params.get('subject_id', None)
+            if student_id and subject_id:
+                return super().get_queryset().filter(student=student_id, subject=subject_id)
+        return super().get_queryset()   
 
 class SecondAssignmentSubmissionViewSet(viewsets.ModelViewSet):
 

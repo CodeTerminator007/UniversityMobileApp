@@ -185,17 +185,13 @@ class AssignmentSubmissionSerializer(serializers.ModelSerializer):
         model =  AssignmentSubmission
         fields =  ['id','assignment','student','document','comment','marks','submission_datetime','first_name','last_name','roll_no']
 
+class Assignmentmarkserializer(serializers.ModelSerializer):
 
-# class Assignmentmarkserializer(serializers.ModelSerializer):
-#     first_name = serializers.ReadOnlyField(source='student.user.first_name')
-#     last_name = serializers.ReadOnlyField(source='student.user.last_name')
-#     roll_no = serializers.ReadOnlyField(source='student.roll_num')
-#     totalmarks = serializers.ReadOnlyField(source='assignment.marks')
-    
-#     document = serializers.FileField(required=False)
-#     class Meta:
-#         model =  AssignmentSubmission
-#         fields =  ['id','assignment','student','document','comment','marks','submission_datetime','first_name','last_name','roll_no','totalmarks']
+    totalmarks = serializers.ReadOnlyField(source='assignment.marks')
+    subject = serializers.ReadOnlyField(source='assignment.subject')        
+    class Meta:
+        model =  AssignmentSubmission
+        fields =  ['id','assignment','student','marks','totalmarks','subject']
 
 
 class incorrect_answersSerializer(serializers.ModelSerializer):
