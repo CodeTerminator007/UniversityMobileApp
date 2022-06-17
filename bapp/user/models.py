@@ -394,4 +394,4 @@ class AssignmentResult(models.Model):
 
     def __str__(self):
         """Unicode representation of AssignmentResult."""
-        pass
+        return f"{self.student.user.username} {self.assignment.Title}"        
