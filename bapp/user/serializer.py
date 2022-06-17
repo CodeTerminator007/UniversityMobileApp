@@ -188,9 +188,11 @@ class AssignmentSubmissionSerializer(serializers.ModelSerializer):
 class Assignmentmarkserializer(serializers.ModelSerializer):
 
     totalmarks = serializers.ReadOnlyField(source='assignment.marks')
+    assignment_name = serializers.ReadOnlyField(source='assignment.Title')
+
     class Meta:
         model =  AssignmentResult
-        fields =  ['id','assignment','student','marks','totalmarks','subject']
+        fields =  ['id','assignment','student','marks','totalmarks','subject','assignment_name']
 
 
 class incorrect_answersSerializer(serializers.ModelSerializer):
