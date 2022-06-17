@@ -398,7 +398,6 @@ class AssignmentResult(models.Model):
 
 class Result(models.Model):
     """Model definition for Result."""
-    student = models.ForeignKey(Student,on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
 
 
@@ -410,7 +409,7 @@ class Result(models.Model):
 
     def __str__(self):
         """Unicode representation of Result."""
-        return f"{self.student.roll_num} {self.name}"
+        return f"{self.name}"
 
 
 class SubjectResult(models.Model):
