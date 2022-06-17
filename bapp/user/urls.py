@@ -11,13 +11,16 @@ from rest_framework_bulk.routes import BulkRouter
 
 from user import views
 
-from .views import (AssignmentSubmissionViewSet, AssignmentViewSet,
-                    AttendanceReportViewSet, AttendanceViewSet,
-                    BulkattandanceView, LoginView, NormalStudentViewSet,
+from .views import (AssignmentmarksresultViewSet, AssignmentSubmissionViewSet,
+                    AssignmentViewSet, AttendanceReportViewSet,
+                    AttendanceViewSet, BulkattandanceView,
+                    Facultualleditviewset, LoginView, NormalStudentViewSet,
                     QuestionViewSet, QuizResultViewSet, QuizViewSet,
                     SecondAssignmentSubmissionViewSet, SecondAssignmentViewSet,
-                    SimpleStudentViewSet, StudentpostViewSet, TimeTableViewSet,
-                    incorrect_answerViewSet, quizresultscreenviewset,UserUpdatewithoutpasswordViewSet,Studentalleditviewset,Facultualleditviewset,AssignmentmarksresultViewSet)
+                    SimpleStudentViewSet, Studentalleditviewset,
+                    StudentpostViewSet, TimeTableViewSet,
+                    UserUpdatewithoutpasswordViewSet, incorrect_answerViewSet,
+                    quizresultscreenviewset,ResultViewset,SubjectResultViewset)
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -49,8 +52,8 @@ router.register(r'updateuserwithoutpassword',UserUpdatewithoutpasswordViewSet)
 router.register(r'Facultualleditserializer',Facultualleditviewset)
 router.register(r'Studentalleditserilizer',Studentalleditviewset)
 router.register(r'Assignmentmarksresult',AssignmentmarksresultViewSet)
-
-AssignmentmarksresultViewSet
+router.register(r'Result',ResultViewset)
+router.register(r'SubjectResult',SubjectResultViewset)
 
 urlpatterns = [
     path('auth/login', LoginView.as_view()),

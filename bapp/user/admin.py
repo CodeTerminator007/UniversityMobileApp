@@ -1,8 +1,11 @@
-from django.contrib import admin
-from .models import Assignment, AssignmentSubmission, User,Admin,Student,Faculty
 from announcements.models import Announcement
-from .models import Courses ,Subjects , Class ,Attendance,AttendanceReport ,Timetable , Quiz, Question ,incorrect_answers , QuizResult ,AssignmentResult
+from django.contrib import admin
 
+from .models import (Admin, Assignment, AssignmentResult, AssignmentSubmission,
+                     Attendance, AttendanceReport, Class, Courses, Faculty,
+                     Question, Quiz, QuizResult, Result, Student,
+                     SubjectResult, Subjects, Timetable, User,
+                     incorrect_answers)
 
 # Register your models here.
 
@@ -24,6 +27,8 @@ admin.site.register(Question)
 admin.site.register(incorrect_answers)
 admin.site.register(QuizResult)
 admin.site.register(AssignmentResult)
+admin.site.register(Result)
+admin.site.register(SubjectResult)
 
 @admin.register(AttendanceReport)
 class AttendanceReportAdmin(admin.ModelAdmin):

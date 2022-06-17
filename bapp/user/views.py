@@ -21,20 +21,24 @@ from rest_framework_simplejwt.tokens import RefreshToken
 import user
 from user import serializer
 
-from .models import (Admin, Assignment, AssignmentSubmission, Attendance,
-                     AttendanceReport, Faculty, Question, Quiz, QuizResult,
-                     Student, Timetable, User, incorrect_answers,AssignmentResult)
-from .serializer import (AdminSerializer, AssignmentSerializer,
-                         AssignmentSubmissionSerializer,
+from .models import (Admin, Assignment, AssignmentResult, AssignmentSubmission,
+                     Attendance, AttendanceReport, Faculty, Question, Quiz,
+                     QuizResult, Result, Student, SubjectResult, Timetable,
+                     User, incorrect_answers)
+from .serializer import (AdminSerializer, Assignmentmarkserializer,
+                         AssignmentSerializer, AssignmentSubmissionSerializer,
                          AttendanceReportSerializer, AttendanceSerializer,
-                         BulkAttandanceSerializer, FacultySerializer,
-                         LoginSerializer, QuestionSerializer,
-                         QuizResultscreenSerializer, QuizResultSerializer,
-                         QuizSerializer, SecondAssignmentSerializer,
+                         BulkAttandanceSerializer, FacultyalleditSerializer,
+                         FacultySerializer, LoginSerializer,
+                         QuestionSerializer, QuizResultscreenSerializer,
+                         QuizResultSerializer, QuizSerializer,
+                         ResultSerializer, SecondAssignmentSerializer,
+                         StudentalleditSerializer,
                          StudentAttendanceReportSeralizer,
                          StudentPostSerializer, StudentSerializer,
-                         TimetableSerializer, UserSerializer,
-                         incorrect_answersSerializer,UserUpdatewithoutpasswwordSerializer,StudentalleditSerializer,FacultyalleditSerializer,Assignmentmarkserializer)
+                         SubjectResultSerializer, TimetableSerializer,
+                         UserSerializer, UserUpdatewithoutpasswwordSerializer,
+                         incorrect_answersSerializer)
 
 
 def get_tokens_for_user(user):
@@ -382,3 +386,19 @@ class quizresultscreenviewset(viewsets.ModelViewSet):
             if student_id and subject:
                 return super().get_queryset().filter(student=student_id, subject=subject)
         return super().get_queryset()    
+
+
+
+class ResultViewset(viewsets.ModelViewSet):
+
+    queryset = Result.objects.all()
+    serializer_class = ResultSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class SubjectResultViewset(viewsets.ModelViewSet):
+
+    queryset = SubjectResult.objects.all()
+    serializer_class = SubjectResultSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]

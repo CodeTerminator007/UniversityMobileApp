@@ -395,3 +395,41 @@ class AssignmentResult(models.Model):
     def __str__(self):
         """Unicode representation of AssignmentResult."""
         return f"{self.student.user.username} {self.assignment.Title}"        
+
+class Result(models.Model):
+    """Model definition for Result."""
+    student = models.ForeignKey(Student,on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+
+
+    class Meta:
+        """Meta definition for Result."""
+
+        verbose_name = 'Result'
+        verbose_name_plural = 'Results'
+
+    def __str__(self):
+        """Unicode representation of Result."""
+        return f"{self.student.roll_num} {self.name}"
+
+
+class SubjectResult(models.Model):
+    """Model definition for SubjectResult."""
+
+    classid = models.ForeignKey(Class,on_delete=CASCADE,related_name='resultforclass')
+    student = models.ForeignKey(Student,on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE,default=1)
+    result = models.ForeignKey(Result,on_delete=models.CASCADE)
+    midobtainedMarks = models.IntegerField(default=100)
+    finalobtainedMarks = models.IntegerField(default=0)
+    sessionalmarks= models.IntegerField(default=30)
+
+    class Meta:
+        """Meta definition for SubjectResult."""
+
+        verbose_name = 'SubjectResult'
+        verbose_name_plural = 'SubjectResults'
+
+    def __str__(self):
+        """Unicode representation of SubjectResult."""
+        return f"{self.student.roll_num} {self.name}"        
