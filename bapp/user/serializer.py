@@ -9,7 +9,7 @@ from rest_framework_bulk import (BulkListSerializer, BulkSerializerMixin,
 
 from .models import (Admin, Assignment, AssignmentSubmission, Attendance,
                      AttendanceReport, Faculty, Question, Quiz, QuizResult,
-                     Student, Timetable, User, incorrect_answers)
+                     Student, Timetable, User, incorrect_answers ,AssignmentResult)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -190,7 +190,7 @@ class Assignmentmarkserializer(serializers.ModelSerializer):
     totalmarks = serializers.ReadOnlyField(source='assignment.marks')
     subject = serializers.ReadOnlyField(source='assignment.subject')        
     class Meta:
-        model =  AssignmentSubmission
+        model =  AssignmentResult
         fields =  ['id','assignment','student','marks','totalmarks','subject']
 
 

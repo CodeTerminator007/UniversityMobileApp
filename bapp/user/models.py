@@ -378,3 +378,20 @@ class QuizResult(models.Model):
         return f"{self.student.user.username} {self.quiz.title}"
 
 
+class AssignmentResult(models.Model):
+    """Model definition for AssignmentResult."""
+    assignment = models.ForeignKey(Assignment,on_delete=models.CASCADE)
+    student = models.ForeignKey(Student,on_delete=models.CASCADE)
+    marks = models.IntegerField()
+
+    # TODO: Define fields here
+
+    class Meta:
+        """Meta definition for AssignmentResult."""
+
+        verbose_name = 'AssignmentResult'
+        verbose_name_plural = 'AssignmentResults'
+
+    def __str__(self):
+        """Unicode representation of AssignmentResult."""
+        pass
