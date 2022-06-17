@@ -11,10 +11,16 @@ from rest_framework_bulk.routes import BulkRouter
 
 from user import views
 
-from .views import (AssignmentSubmissionViewSet, AssignmentViewSet,
-                    AttendanceReportViewSet, AttendanceViewSet,
-                    BulkattandanceView, LoginView, NormalStudentViewSet,
-                    TimeTableViewSet,StudentpostViewSet ,SecondAssignmentViewSet,SecondAssignmentSubmissionViewSet,SimpleStudentViewSet ,QuizViewSet,QuestionViewSet,incorrect_answerViewSet ,QuizResultViewSet)
+from .views import (AssignmentmarksresultViewSet, AssignmentSubmissionViewSet,
+                    AssignmentViewSet, AttendanceReportViewSet,
+                    AttendanceViewSet, BulkattandanceView,
+                    Facultualleditviewset, LoginView, NormalStudentViewSet,
+                    QuestionViewSet, QuizResultViewSet, QuizViewSet,
+                    SecondAssignmentSubmissionViewSet, SecondAssignmentViewSet,
+                    SimpleStudentViewSet, Studentalleditviewset,
+                    StudentpostViewSet, TimeTableViewSet,
+                    UserUpdatewithoutpasswordViewSet, incorrect_answerViewSet,
+                    quizresultscreenviewset,ResultViewset,SubjectResultViewset)
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -41,8 +47,13 @@ router.register(r'Quiz',QuizViewSet)
 router.register(r'Question',QuestionViewSet)
 router.register(r'Incorrect_answers',incorrect_answerViewSet)
 router.register(r'quizresult',QuizResultViewSet)
-
-
+router.register(r'quizresultscreen',quizresultscreenviewset)
+router.register(r'updateuserwithoutpassword',UserUpdatewithoutpasswordViewSet)
+router.register(r'Facultualleditserializer',Facultualleditviewset)
+router.register(r'Studentalleditserilizer',Studentalleditviewset)
+router.register(r'Assignmentmarksresult',AssignmentmarksresultViewSet)
+router.register(r'Result',ResultViewset)
+router.register(r'SubjectResult',SubjectResultViewset)
 
 urlpatterns = [
     path('auth/login', LoginView.as_view()),

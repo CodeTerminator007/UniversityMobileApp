@@ -254,7 +254,8 @@ class Timetable(models.Model):
 
     def __str__(self):
         """Unicode representation of Timetable."""
-        pass
+        return self.person.username
+
 
 
 class Assignment(models.Model):
@@ -365,7 +366,7 @@ class QuizResult(models.Model):
     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='quizresult_student')
     marks = models.IntegerField()
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
-
+    outofmarks = models.IntegerField()
     class Meta:
         """Meta definition for QuizResult."""
 
@@ -377,35 +378,57 @@ class QuizResult(models.Model):
         return f"{self.student.user.username} {self.quiz.title}"
 
 
-# class LeaveReportStudent(models.Model):
-#     student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
-#     leave_date = models.CharField(max_length=255)
-#     leave_message = models.TextField()
-#     leave_status = models.IntegerField(default=0)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+class AssignmentResult(models.Model):
+    """Model definition for AssignmentResult."""
+    assignment = models.ForeignKey(Assignment,on_delete=models.CASCADE)
+    student = models.ForeignKey(Student,on_delete=models.CASCADE)
+    marks = models.IntegerField()
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE,default=1)
+    # TODO: Define fields here
+
+    class Meta:
+        """Meta definition for AssignmentResult."""
+
+        verbose_name = 'AssignmentResult'
+        verbose_name_plural = 'AssignmentResults'
+
+    def __str__(self):
+        """Unicode representation of AssignmentResult."""
+        return f"{self.student.user.username} {self.assignment.Title}"        
+
+class Result(models.Model):
+    """Model definition for Result."""
+    name = models.CharField(max_length=50)
 
 
-# class LeaveReportStaff(models.Model):
-#     staff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
-#     leave_date = models.CharField(max_length=255)
-#     leave_message = models.TextField()
-#     leave_status = models.IntegerField(default=0)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        """Meta definition for Result."""
+
+        verbose_name = 'Result'
+        verbose_name_plural = 'Results'
+
+    def __str__(self):
+        """Unicode representation of Result."""
+        return f"{self.name}"
 
 
-# class FeedBackStudent(models.Model):
-#     student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
-#     feedback = models.TextField()
-#     feedback_reply = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+class SubjectResult(models.Model):
+    """Model definition for SubjectResult."""
 
+    classid = models.ForeignKey(Class,on_delete=CASCADE,related_name='resultforclass')
+    student = models.ForeignKey(Student,on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE,default=1)
+    result = models.ForeignKey(Result,on_delete=models.CASCADE)
+    midobtainedMarks = models.IntegerField(default=100)
+    finalobtainedMarks = models.IntegerField(default=0)
+    sessionalmarks= models.IntegerField(default=30)
 
-# class FeedBackStaffs(models.Model):
-#     staff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
-#     feedback = models.TextField()
-#     feedback_reply = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        """Meta definition for SubjectResult."""
+
+        verbose_name = 'SubjectResult'
+        verbose_name_plural = 'SubjectResults'
+
+    def __str__(self):
+        """Unicode representation of SubjectResult."""
+        return f"{self.student.roll_num} "        

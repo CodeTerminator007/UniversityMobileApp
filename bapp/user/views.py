@@ -21,15 +21,24 @@ from rest_framework_simplejwt.tokens import RefreshToken
 import user
 from user import serializer
 
-from .models import (Admin, Assignment, AssignmentSubmission, Attendance,
-                     AttendanceReport, Faculty, Student, Timetable, User,Quiz,Question,incorrect_answers ,QuizResult)
-from .serializer import (AdminSerializer, AssignmentSerializer,
-                         AssignmentSubmissionSerializer,
+from .models import (Admin, Assignment, AssignmentResult, AssignmentSubmission,
+                     Attendance, AttendanceReport, Faculty, Question, Quiz,
+                     QuizResult, Result, Student, SubjectResult, Timetable,
+                     User, incorrect_answers)
+from .serializer import (AdminSerializer, Assignmentmarkserializer,
+                         AssignmentSerializer, AssignmentSubmissionSerializer,
                          AttendanceReportSerializer, AttendanceSerializer,
-                         BulkAttandanceSerializer, FacultySerializer,
-                         LoginSerializer, StudentAttendanceReportSeralizer,
-                         StudentSerializer, TimetableSerializer,
-                         UserSerializer,StudentPostSerializer , SecondAssignmentSerializer , QuizSerializer ,QuestionSerializer ,incorrect_answersSerializer,QuizResultSerializer)
+                         BulkAttandanceSerializer, FacultyalleditSerializer,
+                         FacultySerializer, LoginSerializer,
+                         QuestionSerializer, QuizResultscreenSerializer,
+                         QuizResultSerializer, QuizSerializer,
+                         ResultSerializer, SecondAssignmentSerializer,
+                         StudentalleditSerializer,
+                         StudentAttendanceReportSeralizer,
+                         StudentPostSerializer, StudentSerializer,
+                         SubjectResultSerializer, TimetableSerializer,
+                         UserSerializer, UserUpdatewithoutpasswwordSerializer,
+                         incorrect_answersSerializer)
 
 
 def get_tokens_for_user(user):
@@ -62,6 +71,14 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)
 
+
+class UserUpdatewithoutpasswordViewSet(viewsets.ModelViewSet):
+
+    queryset = User.objects.all()
+    serializer_class = UserUpdatewithoutpasswwordSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
 class StudentpostViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all()
@@ -79,6 +96,7 @@ class AdminViewSet(viewsets.ModelViewSet):
     serializer_class = AdminSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
 
 class StudentViewSet(viewsets.ModelViewSet):
@@ -100,6 +118,22 @@ class SimpleStudentViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
+class Studentalleditviewset(viewsets.ModelViewSet):
+
+    queryset = Student.objects.all()
+    serializer_class = StudentalleditSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
+
+class Facultualleditviewset(viewsets.ModelViewSet):
+
+    queryset = Faculty.objects.all()
+    serializer_class = FacultyalleditSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
 class NormalStudentViewSet(viewsets.ModelViewSet):
 
@@ -247,7 +281,24 @@ class AssignmentSubmissionViewSet(viewsets.ModelViewSet):
                 return super().get_queryset().filter(student=student_id, assignment=assignment)
         return super().get_queryset()    
 
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+        openapi.Parameter('subject_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
 
+class AssignmentmarksresultViewSet(viewsets.ModelViewSet):
+
+    queryset = AssignmentResult.objects.all()
+    serializer_class = Assignmentmarkserializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]    
+    def get_queryset(self):
+        if self.action == 'list':
+            student_id = self.request.query_params.get('student_id', None)
+            subject_id = self.request.query_params.get('subject_id', None)
+            if student_id and subject_id:
+                return super().get_queryset().filter(student=student_id, subject=subject_id)
+        return super().get_queryset()   
 
 class SecondAssignmentSubmissionViewSet(viewsets.ModelViewSet):
 
@@ -315,3 +366,58 @@ class QuizResultViewSet(viewsets.ModelViewSet):
         quizresult = QuizResult.objects.filter(quiz = kwargs['pk'],student=student_id)
         serializer = QuizResultSerializer(quizresult,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+        openapi.Parameter('subject', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+
+class quizresultscreenviewset(viewsets.ModelViewSet):
+
+    queryset = QuizResult.objects.all()
+    serializer_class = QuizResultscreenSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]    
+    def get_queryset(self):
+        if self.action == 'list':
+            student_id = self.request.query_params.get('student_id', None)
+            subject = self.request.query_params.get('subject', None)
+            if student_id and subject:
+                return super().get_queryset().filter(student=student_id, subject=subject)
+        return super().get_queryset()    
+
+
+
+
+class ResultViewset(viewsets.ModelViewSet):
+
+    queryset = Result.objects.all()
+    serializer_class = ResultSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+
+
+@method_decorator(name='list', decorator=swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('student_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+        openapi.Parameter('result_id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    ]))
+
+class SubjectResultViewset(viewsets.ModelViewSet):
+
+    queryset = SubjectResult.objects.all()
+    serializer_class = SubjectResultSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+    def get_queryset(self):
+        if self.action == 'list':
+            student_id = self.request.query_params.get('student_id', None)
+            result_id = self.request.query_params.get('result_id', None)
+            if student_id and result_id:
+                return super().get_queryset().filter(student=student_id, result=result_id)
+        return super().get_queryset()    
+    
