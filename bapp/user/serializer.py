@@ -12,7 +12,7 @@ from .models import (Admin, Assignment, AssignmentResult, AssignmentSubmission,
                      QuizResult, Result, Student, SubjectResult, Timetable,
                      User, incorrect_answers)
 
-from drf_extra_fields.fields  import Base64FileField
+# from drf_extra_fields.fields  import Base64FileField
 
 class UserSerializer(serializers.ModelSerializer):
     profile_image = serializers.ImageField(required=False)
@@ -183,11 +183,11 @@ class AssignmentSubmissionSerializer(serializers.ModelSerializer):
     last_name = serializers.ReadOnlyField(source='student.user.last_name')
     roll_no = serializers.ReadOnlyField(source='student.roll_num')
     document = serializers.FileField(required=False)
-    document2 = Base64FileField(source='document')
+    # document2 = Base64FileField(required=False)
 
     class Meta:
         model =  AssignmentSubmission
-        fields =  ['id','assignment','student','document','comment','marks','submission_datetime','first_name','last_name','roll_no','document2']
+        fields =  ['id','assignment','student','document','comment','marks','submission_datetime','first_name','last_name','roll_no']
 
 class Assignmentmarkserializer(serializers.ModelSerializer):
 
