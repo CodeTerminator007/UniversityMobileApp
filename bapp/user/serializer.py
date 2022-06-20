@@ -183,7 +183,7 @@ class AssignmentSubmissionSerializer(serializers.ModelSerializer):
     last_name = serializers.ReadOnlyField(source='student.user.last_name')
     roll_no = serializers.ReadOnlyField(source='student.roll_num')
     document = serializers.FileField(required=False)
-    document2 = Base64FileField(required=False)
+    document2 = Base64FileField(source='document')
 
     class Meta:
         model =  AssignmentSubmission
