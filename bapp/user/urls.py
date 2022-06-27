@@ -20,7 +20,7 @@ from .views import (AssignmentmarksresultViewSet, AssignmentSubmissionViewSet,
                     SimpleStudentViewSet, Studentalleditviewset,
                     StudentpostViewSet, TimeTableViewSet,
                     UserUpdatewithoutpasswordViewSet, incorrect_answerViewSet,
-                    quizresultscreenviewset,ResultViewset,SubjectResultViewset)
+                    quizresultscreenviewset,ResultViewset,SubjectResultViewset,AssignmentSubmissionViewSetBase64)
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -54,6 +54,7 @@ router.register(r'Studentalleditserilizer',Studentalleditviewset)
 router.register(r'Assignmentmarksresult',AssignmentmarksresultViewSet)
 router.register(r'Result',ResultViewset)
 router.register(r'SubjectResult',SubjectResultViewset)
+router.register(r'AssignmentSubmissionViewSetBase64',AssignmentSubmissionViewSetBase64)
 
 urlpatterns = [
     path('auth/login', LoginView.as_view()),
