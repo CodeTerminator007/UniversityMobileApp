@@ -2,10 +2,15 @@ from dataclasses import fields
 from unittest.util import _MAX_LENGTH
 
 from django.contrib.auth.models import Permission
+from django.core.validators import RegexValidator
+# from drf_extra_fields.fields  import Base64FileField
+from drf_base64.fields import Base64FileField
 from pyexpat import model
 from rest_framework import serializers
 from rest_framework_bulk import (BulkListSerializer, BulkSerializerMixin,
                                  ListBulkCreateUpdateDestroyAPIView)
+
+from user.fields import ReturnBase64File
 
 from .models import (Admin, Assignment, AssignmentResult, AssignmentSubmission,
                      Attendance, AttendanceReport, Faculty, Question, Quiz,
@@ -14,7 +19,10 @@ from .models import (Admin, Assignment, AssignmentResult, AssignmentSubmission,
 
 
 class UserSerializer(serializers.ModelSerializer):
+    passwordregix = RegexValidator(regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$', message="password must be Minimum eight characters, at least one letter and one number.")
+
     profile_image = serializers.ImageField(required=False)
+    password= serializers.CharField(validators=[passwordregix],write_only=True)
     class Meta:
         model = User 
         fields = ['id','username','email','password','first_name','last_name','is_admin','is_student','is_faculty','phone_number1','phone_number2','gender','last_education_degree','Dob','cnic','profile_image']
@@ -173,18 +181,23 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
 class SecondAssignmentSerializer(serializers.ModelSerializer):
     document = serializers.FileField(required=False)
+    document2 = ReturnBase64File(source='document',required=False)
+    
     class Meta:
         model =  Assignment
-        fields =  ['id','faculty','Title','detail','submission_date','submission_time','document','subject','status','marks','class_id']
+        fields =  ['id','faculty','Title','detail','submission_date','submission_time','document','subject','status','marks','class_id','document2']
 
 class AssignmentSubmissionSerializer(serializers.ModelSerializer):
     first_name = serializers.ReadOnlyField(source='student.user.first_name')
     last_name = serializers.ReadOnlyField(source='student.user.last_name')
     roll_no = serializers.ReadOnlyField(source='student.roll_num')
     document = serializers.FileField(required=False)
+    document2 = ReturnBase64File(source='document',required=False)
+
     class Meta:
         model =  AssignmentSubmission
-        fields =  ['id','assignment','student','document','comment','marks','submission_datetime','first_name','last_name','roll_no']
+        fields =  ['id','assignment','student','document','comment','marks','submission_datetime','first_name','last_name','roll_no','document2']
+
 
 class Assignmentmarkserializer(serializers.ModelSerializer):
 
