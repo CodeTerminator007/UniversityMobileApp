@@ -13,13 +13,12 @@ smartphones and browser-based content for computers.
 
 **User Authentication with Tokens**– It will allow the admin, student and faculty 
 to log into the app and will show respectively home screens for the different types 
-of users 
+of users using the JWT (JSON WEB TOKKENS)
 
 **Assignments** – This Feature will allow the faculty to give an assignment to the 
-respective class and the students will attempt it and upload on mobile app.
+respective class and the students will attempt it and upload on mobile app in the specific time and Faculty can mark the assignments.
 
-**Quiz** – This Feature will allow the faculty to upload a quiz on the app and the 
-students will attempt it and upload the answers back it on time
+**Quiz** – This Feature will allow the faculty to Create a Quiz on app for the subject it will be MCQS based Quiz the questions will be shuffled and you will have specific time to attempt the quiz once started the quiz timer will start and end of the time your quiz will be automatically submitted
 
 **Attendance** – In this feature Faculty will have the ability to mark the attendance 
 of respective class and the students can view the attendance on the mobile app
@@ -28,9 +27,9 @@ of respective class and the students can view the attendance on the mobile app
 that will be seen on all the user’s news feed and the faculty can also put 
 announcements that will be seen to their classes only 
 
-**Timetable** – Teachers and Students will be able to view their time table 
+**Timetable** – Teachers and Students will be able to view their time table and customize it according to themself 
 
-**Result** – This feature will allow the admin to mark the result of the students and 
+**Result** – This feature will allow the Faculty to mark the result of the students and 
 the students will be able to see it 
 
 **Courses** – This feature will display all the Courses the university is giving and 
