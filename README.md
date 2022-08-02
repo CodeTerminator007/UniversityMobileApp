@@ -9,12 +9,41 @@ MyUniversity is a new open-source effort that aims to deliver campus apps,
 information, and data to mobile devices.The project offers both a native app for Android 
 smartphones and browser-based content for computers. 
 
-<img align="left" width="250" height="500" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/22.jpeg">                                         
-<img  width="250" height="500" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/WhatsApp%20Image%202022-07-25%20at%209.52.01%20AM.jpeg">
-<img  width="250" height="500" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n1.jpeg"><img  width="250" height="500" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n2.jpeg">
-<img  width="250" height="500" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n3.jpeg">
-<img  width="250" height="500" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n4.jpeg">
-<img  width="250" height="500" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n5.jpeg">
+**GUI**
+
+<p float="left">
+<img width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/22.jpeg">         
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/WhatsApp%20Image%202022-07-25%20at%209.52.01%20AM.jpeg">  
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n1.jpeg">
+</p>
+
+
+<p float="left">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n2.jpeg">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n3.jpeg">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n4.jpeg">
+</p>
+
+
+<p float="left">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n5.jpeg">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n6.jpeg">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n7.jpeg">
+</p>
+
+<p float="left">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n8.jpeg">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n9.jpeg">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n10.jpeg">
+
+</p>
+
+<p float="left">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n11.jpeg">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n12.jpeg">
+<img  width="300" height="600" src="https://github.com/CodeTerminator007/UniversityMobileApp/blob/master/bapp/admin-interface/logo/n13.jpeg">
+
+</p>
 
 **App features included:**
 
