@@ -55,40 +55,12 @@ username Husnain
 
 password Husnain
 
-username Ali
-
-password Ali
-
-
-username Shahzaib
-
-password Shahzaib
-
-
 **Students**
-
-username Shehzad
-
-password Shehzad
-
-username Abdulrehman
-
-password Abdulrehman
-
 
 username Yasin
 
 password Yasin
 
-
-username Khizar
-
-password Khizar
-
-
-username Zaid
-
-password Zaid
 
 [Documentation](https://drive.google.com/file/d/1_W5ozOmQEjGqJc55Y5pDZ7Ejo7Llsysk/view?usp=sharing)
 
